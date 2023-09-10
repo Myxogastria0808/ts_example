@@ -8,9 +8,13 @@ yarn add --dev typescript ts-loader webpack webpack-cli webpack-dev-server
 
 ### 各package紹介
 ・```typescript``` TypeScriptのコンパイラ
+
 ・```ts-loader``` Webpackと連携してTypeScriptコンパイラを起動
+
 ・```webpack``` 複数のファイルを一つのファイルにする
+
 ・```webpack-cli``` コマンドラインでwebpackを使う
+
 ・```webpack-dev-server``` 開発用webサーバーの起動 (ホットリロード)
 
 ### typescriptのコンパイルを起動するための設定ファイルの生成
@@ -25,7 +29,11 @@ yarn add --dev eslint eslint-config-prettier prettier @typescript-eslint/parser 
 
 ### 各packageの紹介
 ・```eslint-config-prettier```  ESLintとPrettierの併用
+
 ・```@typescript-eslint/eslint-plugin```　ESLintでtypescriptのチェックを行う
+
 ・```@typescript-eslint/parser```  ESLintでtypescriptを解析できるようにする
+
 ・```husky``` gitコマンドをフックに別コマンドを呼び出せる
+
 ・```lint-staged``` commitしたファイル (stagingされてるファイル)にlintを実行することができる
