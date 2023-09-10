@@ -18,6 +18,17 @@ wsl touch index.ts
 cd ..
 ```
 
+## `package.json`
+
+以下を追加
+
+```js
+  "scripts": {
+    "build": "webpack --mode=production",
+    "start": "webpack-cli server --mode=development"
+  },
+```
+
 ## `.prettierrc`
 
 ```js
