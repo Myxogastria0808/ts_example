@@ -90,7 +90,7 @@ module.exports = {
     parserOptions: {
         sourceType: 'module', //moduleかscriptを指定 moduleにすることで、import文 export文 が利用できる。
         project: './tsconfig.json', // TypeScriptのLint時に参照するconfigファイルを指定　(tsconfigRootDirからの相対パス)
-        // tsconfigRootDir: __dirname, //tsconfigRootDirはプロジェクトルートの絶対パスを指定する
+        tsconfigRootDir: __dirname, //tsconfigRootDirはプロジェクトルートの絶対パスを指定する
     },
     ignorePatterns: ['*.cjs'],
     rules: {},
