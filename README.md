@@ -7,10 +7,7 @@ yarn init
 #webpackには、何らかのローダーを必要とする。
 #今回は、ts-loaderを用いる。
 yarn add --dev typescript ts-loader webpack webpack-cli webpack-dev-server
-yarn add --dev \
-  eslint prettier \
-  eslint-config-prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin \ 
-  husky lint-staged
+yarn add --dev eslint prettier eslint-config-prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin husky lint-staged
 #yarn tsc --init で、tsconfig.jsonを生成
 yarn tsc --init
 wsl touch .prettierrc
