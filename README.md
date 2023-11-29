@@ -6,19 +6,13 @@
 yarn init
 #webpackには、何らかのローダーを必要とする。
 #今回は、ts-loaderを用いる。
-#必要に応じてbabelも追加する。
-#babelのloaderのインストールコマンドは、以下
-#
-#babel本体のインストール
-#yarn add --dev @babel/core
-#追加でやりたりbebelの動作を遂行するための追加パッケージを入れる。
-#ex) ES6 -> ES6　への変換
-#yarn add --dev @babel/preset-env
 yarn add --dev typescript ts-loader webpack webpack-cli webpack-dev-server
+yarn add --dev eslint eslint-config-prettier prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin
 #yarn tsc --init で、tsconfig.jsonを生成
 yarn tsc --init
 wsl touch .prettierrc
 wsl touch webpack.config.js
+wsl touch .eslintrc.js
 mkdir dist
 mkdir src
 cd dist
@@ -96,6 +90,33 @@ webpack-dev-serverを用いる (webpack-cli server)とホットリロードに�
     "build": "webpack --mode=production",
     "start": "webpack-cli server --mode=development"
   },
+```
+
+## `eslintrc.js`
+
+```javascript
+module.exports = {
+    root: true, // 上位ディレクトリにある他のeslintrcを参照しないようにする
+    env: {
+        browser: true, //ブラウザ対応
+        es6: true, //es6対応
+        // node: true, //node.jsに対応
+    },
+    extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended", // TypeScriptでチェックされる項目をLintから除外する設定
+        "prettier", // prettierのextendsは他のextendsより後に記述する
+        "prettier/@typescript-eslint",
+    ],
+    plugins: ["@typescript-eslint"],
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        sourceType: 'module', //moduleかscriptを指定 moduleにすることで、import文 export文 が利用できる。
+        project: './tsconfig.json', // TypeScriptのLint時に参照するconfigファイルを指定　(tsconfigRootDirからの相対パス)
+        tsconfigRootDir: __dirname, //tsconfigRootDirはプロジェクトルートの絶対パスを指定する
+    },
+    rules: {}
+}
 ```
 
 ## `.prettierrc`

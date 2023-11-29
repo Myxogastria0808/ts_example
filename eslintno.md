@@ -8,13 +8,35 @@
 
 ## 実際の`.eslintrc.js`ファイルの設定
 
-```
+```javascript
+module.exports = {
+    root: true, // 上位ディレクトリにある他のeslintrcを参照しないようにする
+    env: {
+        browser: true, //ブラウザ対応
+        es6: true, //es6対応
+        node: true, //node.jsに対応
+    },
+    extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended", // TypeScriptでチェックされる項目をLintから除外する設定
+        "prettier", // prettierのextendsは他のextendsより後に記述する
+        "prettier/@typescript-eslint",
+    ],
+    plugins: ["@typescript-eslint"],
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        sourceType: 'module', //moduleかscriptを指定 moduleにすることで、import文 export文 が利用できる。
+        project: './tsconfig.json', // TypeScriptのLint時に参照するconfigファイルを指定　(tsconfigRootDirからの相対パス)
+        tsconfigRootDir: __dirname, //tsconfigRootDirはプロジェクトルートの絶対パスを指定する
+    },
+    rules: {}
+}
 ```
 
 ### `root`
 
 ```javascript
-    root: true, //rootディレクトリの.eslintrc.jsを参照する
+    root: true, // 上位ディレクトリにある他のeslintrcを参照しないようにする
 ```
 
 rootディレクトリの.eslintrc.jsを参照する
@@ -31,22 +53,39 @@ rootディレクトリの.eslintrc.jsを参照する
 
 trueにすると、ESLintがグローバル変数を認識するようになる
 
+### `plugins`
+
+```javascript
+    plugins: ["@typescript-eslint"],
+```
+
+第三者が作成したルールをpluginsとして取り入れられる
+
+### `parser`
+
+```javascript
+    parser: "@typescript-eslint/parser",
+```
+
+javascriptやtypescriptの構文解析を行うパーサを設定する
+
+`@typescript-eslint/parser` $$\cdots$$ typescript及びjavascriptの構文解析を行うパーサ
+
 ### `parserOptions`
 
 ```javascript
     parserOptions: {
         sourceType: 'module', //moduleかscriptを指定 moduleにすることで、import文 export文 が利用できる。
-        project: './tsconfig.json', // TypeScriptのLint時に参照するconfigファイルを指定
+        project: './tsconfig.json', // TypeScriptのLint時に参照するconfigファイルを指定　(tsconfigRootDirからの相対パス)
+        tsconfigRootDir: __dirname, //tsconfigRootDirはプロジェクトルートの絶対パスを指定する
     },
 ```
 
 `sourceType` $$\cdots$$ moduleかscriptを指定 moduleにすることで、import文 export文 が利用できる。
 
-`project` $$\cdots$$typescriptのLint時に参照するconfigファイルを指定
+`project` $$\cdots$$typescriptのLint時に参照するconfigファイルを指定 (tsconfigRootDirからの相対パス)
 
-`"eslint:recommended"` $$\cdots$$ ESLintの標準プリセット
-
-
+`tsconfigRootDir` $$\cdots$$ プロジェクトルートの絶対パスを指定する
 
 ### `extends`
 
@@ -59,7 +98,13 @@ trueにすると、ESLintがグローバル変数を認識するようになる
     ],
 ```
 
+`"eslint:recommended"` $$\cdots$$ ESLintの標準プリセット
+
+
+
 ### `rules`
+
+`example`
 
 ```javascript
     rules: {
@@ -108,7 +153,30 @@ yarn eslint rsc --fix
     ],
 ```
 
-### Airbnbのプリセット
+### Airbnb-baseのプリセット (TypeScript)
+
+プリセットのinstall
+
+```sh
+yarn add -D \
+  'eslint' \
+  '@typescript-eslint/parser' \
+  '@typescript-eslint/eslint-plugin'
+```
+
+`.eslintrc.js`
+
+```javascript
+    extends: [
+        "airbnb-base", // javascriptのairbnbのプリセット
+        "airbnb-typescript/base", // 上のプリセットに上書きさせる形でtypescript対応させる
+        "plugin:@typescript-eslint/recommended-requiring-type-checking", //TypeScript ESLintが提供する推奨ルールセットで、型情報を要するルールを含む
+    ],
+```
+
+### Airbnbのプリセット (JavaScript)
+
+Reactとかを使うときは、こっちを使う
 
 プリセットのinstall
 
@@ -124,7 +192,7 @@ yarn add --dev eslint-config-airbnb
     ],
 ```
 
-### Airbnb-baseのプリセット
+### Airbnb-baseのプリセット (JavaScript)
 
 プリセットのinstall
 
