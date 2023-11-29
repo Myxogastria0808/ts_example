@@ -13,6 +13,7 @@ yarn tsc --init
 wsl touch .prettierrc
 wsl touch webpack.config.js
 wsl touch .eslintrc.js
+wsl touch .gitignore
 mkdir dist
 mkdir src
 cd dist
@@ -29,6 +30,12 @@ yarn husky add .husky/pre-commit "yarn lint-staged"
 ```
 
 ## [Babelを追加する場合](babel.md)
+
+## `.gitignore`
+
+```git
+node_modules
+```
 
 ## `package.json`
 
