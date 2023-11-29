@@ -58,7 +58,7 @@ webpack-dev-serverを用いる (webpack-cli server)とホットリロードに�
   },
 ```
 
-## `.eslintrc.js`
+## `.eslintrc.cjs`
 
 ```javascript
 module.exports = {
@@ -71,8 +71,7 @@ module.exports = {
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended", // TypeScriptでチェックされる項目をLintから除外する設定
-        "prettier", // prettierのextendsは他のextendsより後に記述する
-        "prettier/@typescript-eslint",
+        "prettier", // prettierのextendsは一番下に記載する
     ],
     plugins: ["@typescript-eslint"],
     parser: "@typescript-eslint/parser",
@@ -211,7 +210,7 @@ module.exports = {
 }
 ```
 
-## `webpack.config.js`
+## `webpack.config.cjs`
 
 ```js
 //webpackの設定
