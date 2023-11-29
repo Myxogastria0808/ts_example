@@ -48,7 +48,7 @@ webpack-dev-serverを用いる (webpack-cli server)とホットリロードに�
   },
 ```
 
-## `eslintrc.js`
+## `.eslintrc.js`
 
 ```javascript
 module.exports = {
