@@ -45,17 +45,28 @@ node_modules
 
 webpack-dev-serverを用いる (webpack-cli server)とホットリロードにできる。
 
+Windowsの場合は、""(ダブルクォーテーション)を `\"`にする
+
+Macの場合は、""(ダブルクォーテーション)を `' (シングル`クォーテーション) で囲む
+
+参照記事
+
+{% embed url="https://qiita.com/sochan-dev/items/525539b5dc7e4d7f814b" %}
+
 ```js
-  "scripts": {
-      "prepare": "husky install",
-      "build": "webpack --mode=production",
-      "start": "webpack-cli server --mode=development",
-      "lint": "eslint --fix 'src/**/*.{js,ts}'",
-      "lint-fix": "eslint --fix './src/**/*.{js,ts}' && prettier --write './src/**/*.{js,ts}'"
-  },
-  "lint-staged": {
-      "*.{js, ts}": "prettier --write './src/**/*.{js,ts}' && eslint --fix 'src/**/*.{js,ts}'"
-  },
+    "scripts": {
+        "prepare": "husky install",
+        "build": "webpack --mode=production",
+        "start": "webpack-cli server --mode=development",
+        "lint": "prettier --write \"./src/**/*.{js,ts}\" && eslint \"./src/**/*.{js,ts}\"",
+        "prettier": "prettier --write \"./src/**/*.{js,ts}\""
+    },
+    "lint-staged": {
+        "*.{js, ts}": [
+            "prettier --write \"./src/**/*.{js,ts}\"",
+            "eslint --fix \"src/**/*.{js,ts}\""
+        ]
+    },
 ```
 
 ## `.eslintrc.cjs`
@@ -66,22 +77,24 @@ module.exports = {
     env: {
         browser: true, //ブラウザ対応
         es6: true, //es6対応
-        // node: true, //node.jsに対応
+        node: true, //node.jsに対応
+        commonjs: true, //CommonJSに対応
     },
     extends: [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended", // TypeScriptでチェックされる項目をLintから除外する設定
-        "prettier", // prettierのextendsは一番下に記載する
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended', // TypeScriptでチェックされる項目をLintから除外する設定
+        'prettier', // prettierのextendsは他のextendsより後に記述する
     ],
-    plugins: ["@typescript-eslint"],
-    parser: "@typescript-eslint/parser",
+    plugins: ['@typescript-eslint'],
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         sourceType: 'module', //moduleかscriptを指定 moduleにすることで、import文 export文 が利用できる。
         project: './tsconfig.json', // TypeScriptのLint時に参照するconfigファイルを指定　(tsconfigRootDirからの相対パス)
-        tsconfigRootDir: __dirname, //tsconfigRootDirはプロジェクトルートの絶対パスを指定する
+        // tsconfigRootDir: __dirname, //tsconfigRootDirはプロジェクトルートの絶対パスを指定する
     },
-    rules: {}
-}
+    ignorePatterns: ['*.cjs'],
+    rules: {},
+};
 ```
 
 ## `.prettierrc`
@@ -212,45 +225,45 @@ module.exports = {
 
 ## `webpack.config.cjs`
 
-```js
+```javascript
 //webpackの設定
-const path = require("path");
+const path = require('path');
 module.exports = {
-  //モジュールバンドルの起点となるファイル (ルートファイル)の設定
-  entry: {
-    bundle: "./src/index.ts",
-  },
-  //吐き出す先
-  output: {
-    //__dirname <-webpack.config.jsのあるディレクトリ
-    //joinでパスを結合している
-    path: path.join(__dirname, "dist"),
-    //[name] <-entryで記述した名前 (bundleがファイル名になる。チャンク名という)
-    filename: "[name].js",
-  },
-  //import export でファイル拡張子を書くかどうかを決める
-  resolve: {
-    //.tsと.jsは、拡張子を略してOK!
-    extensions: [".ts", ".js"],
-  },
-  devServer: {
-    static: {
-      // webpack-dev-serverの公開フォルダ
-      directory: path.join(__dirname, "dist"),
+    //モジュールバンドルの起点となるファイル (ルートファイル)の設定
+    entry: {
+        bundle: './src/index.ts',
     },
-    //ブラウザの自動起動
-    open: true,
-  },
-  //モジュールのルールの設定
-  module: {
-    rules: [
-      //.tsファイルをts-loaderでコンパイルする
-      {
-        loader: "ts-loader",
-        test: /\.ts$/,
-      },
-    ],
-  },
+    //吐き出す先
+    output: {
+        //__dirname <-webpack.config.jsのあるディレクトリ
+        //joinでパスを結合している
+        path: path.join(__dirname, 'dist'),
+        //[name] <-entryで記述した名前 (bundleがファイル名になる。チャンク名という)
+        filename: '[name].js',
+    },
+    //import export でファイル拡張子を書くかどうかを決める
+    resolve: {
+        //.tsと.jsは、拡張子を略してOK!
+        extensions: ['.ts', '.js'],
+    },
+    devServer: {
+        static: {
+            // webpack-dev-serverの公開フォルダ
+            directory: path.join(__dirname, 'dist'),
+        },
+        //ブラウザの自動起動
+        open: true,
+    },
+    //モジュールのルールの設定
+    module: {
+        rules: [
+            //.tsファイルをts-loaderでコンパイルする
+            {
+                loader: 'ts-loader',
+                test: /\.ts$/,
+            },
+        ],
+    },
 };
 ```
 
