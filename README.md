@@ -53,6 +53,9 @@ webpack-dev-serverを用いる (webpack-cli server)とホットリロードに�
       "lint": "eslint --fix 'src/**/*.{js,ts}'",
       "lint-fix": "eslint --fix './src/**/*.{js,ts}' && prettier --write './src/**/*.{js,ts}'"
   },
+  "lint-staged": {
+      "*.{js, ts}": "prettier --write './src/**/*.{js,ts}' && eslint --fix 'src/**/*.{js,ts}'"
+  },
 ```
 
 ## `.eslintrc.js`
