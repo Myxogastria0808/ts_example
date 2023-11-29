@@ -4,7 +4,18 @@
 
 ```shell
 yarn init
+#webpackには、何らかのローダーを必要とする。
+#今回は、ts-loaderを用いる。
+#必要に応じてbabelも追加する。
+#babelのloaderのインストールコマンドは、以下
+#
+#babel本体のインストール
+#yarn add --dev @babel/core
+#追加でやりたりbebelの動作を遂行するための追加パッケージを入れる。
+#ex) ES6 -> ES6　への変換
+#yarn add --dev @babel/preset-env
 yarn add --dev typescript ts-loader webpack webpack-cli webpack-dev-server
+#yarn tsc --init で、tsconfig.jsonを生成
 yarn tsc --init
 wsl touch .prettierrc
 wsl touch webpack.config.js
@@ -18,9 +29,67 @@ wsl touch index.ts
 cd ..
 ```
 
+## Babelのいろいろ
+
+### babel本体のinstall
+
+```bash
+yarn add --dev @babel/core
+```
+
+### babel-loaderのinstall
+
+```bash
+yarn add --dev babel-loader
+```
+
+### 追加のbabelプリセットのinstall
+
+ex) ES6 -> ES5に変換する
+
+```bash
+yarn add --dev @babel/preset-env
+```
+
+## `.babelrc`
+
+利用するプリセットの設定を以下のようにする
+
+```javascript
+{
+  "presets": ["@babel/preset-env"]
+}
+```
+
+## `webpack.config.js`
+
+```javascript
+/** ↓ エディタで補完を効かせるための JSDoc */
+/** @type {import('webpack').Configuration} */
+const config = {
+  module: {
+    rules: [
+      {
+        // 拡張子 js のファイル（正規表現）
+        test: /\.js$/,
+        // ローダーの指定
+        loader: "babel-loader",
+      },
+    ],
+  },
+};
+
+// 設定を CommnJS 形式でエクスポート
+module.exports = config;
+```
+
 ## `package.json`
 
 以下を追加
+
+`yarn webpack --watch` でファイルの変更を検知して自動的に再バンドルすることができる。
+
+webpack-dev-serverを用いる (webpack-cli server)とホットリロードにできる。
 
 ```js
   "scripts": {
@@ -170,7 +239,7 @@ module.exports = {
     //__dirname <-webpack.config.jsのあるディレクトリ
     //joinでパスを結合している
     path: path.join(__dirname, "dist"),
-    //[name] <-extraryで記述した名前
+    //[name] <-entryで記述した名前 (bundleがファイル名になる。チャンク名という)
     filename: "[name].js",
   },
   //import export でファイル拡張子を書くかどうかを決める
