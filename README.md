@@ -21,6 +21,11 @@ cd ..
 cd src
 wsl touch index.ts
 cd ..
+#pre-commit時にlint-stagedを走らせるための設定
+git init
+npx husky install
+yarn install
+yarn husky add .husky/pre-commit "yarn lint-staged"
 ```
 
 ## [Babelを追加する場合](babel.md)
