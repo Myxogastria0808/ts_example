@@ -40,8 +40,9 @@ webpack-dev-serverを用いる (webpack-cli server)とホットリロードに�
 
 ```js
   "scripts": {
+      "prepare": "husky install",
       "build": "webpack --mode=production",
-      "start": "webpack-cli server --mode=development"
+      "start": "webpack-cli server --mode=development",
       "lint": "eslint --fix 'src/**/*.{js,ts}'",
       "lint-fix": "eslint --fix './src/**/*.{js,ts}' && prettier --write './src/**/*.{js,ts}'"
   },
