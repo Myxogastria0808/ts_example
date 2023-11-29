@@ -2,7 +2,7 @@
 
 ## 参考サイト URL
 
-https://ma-vericks.com/blog/vscode-prettier/ https://ralacode.com/blog/post/vscode-prettier/
+{% embed url="https://ralacode.com/blog/post/vscode-prettier/" %}
 
 ## 実際の`.prettierrc`ファイルの設定
 
