@@ -12,7 +12,7 @@
 git init
 ```
 
-## huskyとlintstagedのinstall
+## huskyとlint-stagedのinstall
 
 ```bash
 yarn add --dev husky lint-staged
